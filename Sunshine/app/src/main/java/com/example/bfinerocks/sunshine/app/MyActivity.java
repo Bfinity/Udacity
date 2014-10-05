@@ -1,19 +1,21 @@
 package com.example.bfinerocks.sunshine.app;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ArrayAdapter;
 
+import java.util.ArrayList;
 
 
 public class MyActivity extends ActionBarActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,20 @@ public class MyActivity extends ActionBarActivity {
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
+            ArrayList<String> fakeForecast;
+            fakeForecast = new ArrayList<String>();
+            fakeForecast.add("Today - Sunny - 88/63");
+            fakeForecast.add("Tomorrow - Rainy - 75/66");
+            fakeForecast.add("Monday - Cloudy - 67/60");
+            fakeForecast.add("Tuesday - Chance of Meatballs - 80/70");
+            fakeForecast.add("Wednesday - Chilly - 50/45");
+            fakeForecast.add("Thursday - Hungry - 80/78");
+
+            ArrayAdapter<String> listOfForecast;
+            listOfForecast = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
+                    R.id.list_item_forecast_textview, fakeForecast);
+
+
         }
 
         @Override

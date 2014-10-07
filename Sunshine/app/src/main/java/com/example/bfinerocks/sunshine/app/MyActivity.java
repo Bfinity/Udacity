@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -53,7 +54,15 @@ public class MyActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        ArrayAdapter<String> mForecastAdapter;
         public PlaceholderFragment() {
+
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_my, container, false);
             ArrayList<String> fakeForecast;
             fakeForecast = new ArrayList<String>();
             fakeForecast.add("Today - Sunny - 88/63");
@@ -63,17 +72,14 @@ public class MyActivity extends ActionBarActivity {
             fakeForecast.add("Wednesday - Chilly - 50/45");
             fakeForecast.add("Thursday - Hungry - 80/78");
 
-            ArrayAdapter<String> listOfForecast;
-            listOfForecast = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
+
+            mForecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
                     R.id.list_item_forecast_textview, fakeForecast);
 
+            ListView forecastListView = (ListView) rootView.findViewById (R.id.list_view_forecast);
+            forecastListView.setAdapter(mForecastAdapter);
 
-        }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_my, container, false);
             return rootView;
         }
     }

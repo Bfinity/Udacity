@@ -30,7 +30,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -40,6 +42,7 @@ public class ForecastFragment extends Fragment {
 
 
     ArrayAdapter<String> mForecastAdapter;
+    List<String> realForecastData;
 
     public ForecastFragment() {
 
@@ -53,9 +56,10 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_my, container, false);
-        ArrayList<String> fakeForecast;
+
+        List<String> fakeForecast;
         fakeForecast = new ArrayList<String>();
         fakeForecast.add("Today - Sunny - 88/63");
         fakeForecast.add("Tomorrow - Rainy - 75/66");
@@ -63,8 +67,6 @@ public class ForecastFragment extends Fragment {
         fakeForecast.add("Tuesday - Chance of Meatballs - 80/70");
         fakeForecast.add("Wednesday - Chilly - 50/45");
         fakeForecast.add("Thursday - Hungry - 80/78");
-
-
         mForecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview, fakeForecast);
 
@@ -72,10 +74,10 @@ public class ForecastFragment extends Fragment {
         forecastListView.setAdapter(mForecastAdapter);
 
 
-
-
         return rootView;
     }
+
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -104,7 +106,7 @@ public class ForecastFragment extends Fragment {
     }
 
 
-    public static class FetchWeatherTask extends AsyncTask<String, Void, String[]>
+    public class FetchWeatherTask extends AsyncTask<String, Void, String[]>
     {
         private final String LOG_TAG  = FetchWeatherTask.class.getSimpleName();
         @Override
@@ -181,7 +183,7 @@ public class ForecastFragment extends Fragment {
                    return null;
                 }
                 forecastJsonStr = buffer.toString();
-               Log.v(LOG_TAG, "JSON Informoation" + forecastJsonStr);
+               
             }
             catch (IOException e){
             Log.e("PlaceholderFragment", "Error ", e);
@@ -288,7 +290,15 @@ public class ForecastFragment extends Fragment {
             return resultStrs;
         }
 
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            realForecastData = new ArrayList<String>(Arrays.asList(strings));
+            for(int i = 0; i < realForecastData.size(); i++) {
+                mForecastAdapter.add(realForecastData.get(i));
+            }
 
+        }
     }
 }
 

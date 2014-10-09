@@ -136,6 +136,18 @@ public class ForecastFragment extends Fragment {
 
                 URL url = new URL(aBuilder.toString());
 
+ /*              Uri.Builder uriBuilt = new Uri.Builder();
+               uriBuilt.scheme("http").authority("api.openweathermap.org").appendPath("data")
+                       .appendPath("2.5").appendPath("forecast").appendPath("daily")
+                       .appendQueryParameter("q", string[0]).appendQueryParameter("mode", "json")
+                       .appendQueryParameter("units", "metric").appendQueryParameter("cnt", "7");
+
+               String urlString = uriBuilt.build().toString();
+
+               URL url = new URL(urlString);*/
+
+               /*"http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7"*/
+
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");

@@ -78,7 +78,9 @@ public class ForecastFragment extends Fragment {
         forecastListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String forecastSelected = mForecastAdapter.getItem(position);
                 Intent moveToDetail = new Intent(getActivity(), DetailActivity.class);
+                moveToDetail.putExtra(Intent.EXTRA_TEXT, forecastSelected);
                 startActivity(moveToDetail);
             }
         });

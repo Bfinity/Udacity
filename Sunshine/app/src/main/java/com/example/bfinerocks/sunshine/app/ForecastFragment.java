@@ -15,8 +15,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,8 +73,14 @@ public class ForecastFragment extends Fragment {
         mForecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview, fakeForecast);
 
-        ListView forecastListView = (ListView) rootView.findViewById(R.id.list_view_forecast);
+        final ListView forecastListView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         forecastListView.setAdapter(mForecastAdapter);
+        forecastListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(forecastListView.getContext(), forecastListView.getItemAtPosition(position).toString() , Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         return rootView;
@@ -183,7 +192,7 @@ public class ForecastFragment extends Fragment {
                    return null;
                 }
                 forecastJsonStr = buffer.toString();
-               
+
             }
             catch (IOException e){
             Log.e("PlaceholderFragment", "Error ", e);

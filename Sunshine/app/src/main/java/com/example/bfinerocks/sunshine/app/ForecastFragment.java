@@ -124,33 +124,21 @@ public class ForecastFragment extends Fragment {
         {
             updateWeather();
         }
-        if(id == R.id.action_viewmap)
-        {
-            viewLocationOnMap();
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
     public void updateWeather()
     {
         mDefaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        location = mDefaultSharedPreferences.getString("location", "Detroit");
-        units = mDefaultSharedPreferences.getString("units", "metric");
+        location = mDefaultSharedPreferences.getString(getString(R.string.location_key),
+                getString(R.string.pref_location_default));
+        units = mDefaultSharedPreferences.getString(getString(R.string.pref_units_key),
+               "metric");
         new FetchWeatherTask().execute(location, units);
     }
 
-    public void viewLocationOnMap()
-    {;
-        Uri.Builder uriBuilt = new Uri.Builder();
-        uriBuilt.scheme("https").authority("www.google.com").appendPath("maps")
-                .appendPath("place").appendPath(location);
-        Intent seeLocation = new Intent(Intent.ACTION_VIEW);
-        seeLocation.setData(uriBuilt.build());
-        if(seeLocation.resolveActivity(getActivity().getPackageManager()) != null)
-        {
-            startActivity(seeLocation);
-        }
-    }
+
 
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]>

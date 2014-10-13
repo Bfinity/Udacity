@@ -1,7 +1,10 @@
 package com.example.bfinerocks.sunshine.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,9 +42,35 @@ public class MyActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             Intent settingsActivity = new Intent(MyActivity.this, SettingsActivity.class);
             startActivity(settingsActivity);
-            return true;
-        }
+            return true;}
+
+            if(id == R.id.action_viewmap)
+            {
+                viewLocationOnMap();
+                return true;
+            }
         return super.onOptionsItemSelected(item);
     }
+
+    public void viewLocationOnMap()
+    {
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String location = mSharedPreferences.getString(getString(R.string.location_key),
+                getString(R.string.pref_location_default));
+        Uri uriBuilt = new Uri.Builder().scheme("geo").encodedOpaquePart("0,0?=" + location).build();
+/*        uriBuilt.scheme("https").authority("www.google.com").appendPath("maps")
+                .appendPath("place").appendPath(location).build();*/
+ /*       Uri uriBuilt = Uri.parse("geo:0,0?=").buildUpon().appendQueryParameter("q", location).build();*/
+
+
+        Intent seeLocation = new Intent(Intent.ACTION_VIEW);
+        seeLocation.setData(uriBuilt);
+        if(seeLocation.resolveActivity(getPackageManager()) != null)
+        {
+            startActivity(seeLocation);
+        }
+    }
+
+
 
 }

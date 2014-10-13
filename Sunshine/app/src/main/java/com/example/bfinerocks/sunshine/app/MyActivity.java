@@ -57,10 +57,10 @@ public class MyActivity extends ActionBarActivity {
         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String location = mSharedPreferences.getString(getString(R.string.location_key),
                 getString(R.string.pref_location_default));
-        Uri uriBuilt = new Uri.Builder().scheme("geo").encodedOpaquePart("0,0?=" + location).build();
+        Uri uriBuilt = new Uri.Builder().scheme("geo").encodedOpaquePart("0,0?q=" + location).build();
 /*        uriBuilt.scheme("https").authority("www.google.com").appendPath("maps")
                 .appendPath("place").appendPath(location).build();*/
- /*       Uri uriBuilt = Uri.parse("geo:0,0?=").buildUpon().appendQueryParameter("q", location).build();*/
+/*        Uri uriBuilt = Uri.parse("geo:0,0?=").buildUpon().appendQueryParameter("q", location).build();*/
 
 
         Intent seeLocation = new Intent(Intent.ACTION_VIEW);

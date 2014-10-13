@@ -7,5 +7,7 @@
     <string name="forecast">Today - Sunny - 88/63</string>
     <string name="refresh">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="dummy_text">Something</string>
+    <string name="dummy_temp">98</string>
 
 </resources>

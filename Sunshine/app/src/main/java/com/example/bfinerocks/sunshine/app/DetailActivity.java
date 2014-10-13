@@ -1,24 +1,26 @@
 package com.example.bfinerocks.sunshine.app;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
-
+import android.widget.TextView;
 
 
 public class DetailActivity extends ActionBarActivity {
+
+    String weatherToDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -50,6 +52,7 @@ public class DetailActivity extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        String forecast;
 
         public PlaceholderFragment() {
         }
@@ -57,7 +60,13 @@ public class DetailActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
+            Intent receivedInfo = getActivity().getIntent();
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+            if(receivedInfo != null && receivedInfo.hasExtra(Intent.EXTRA_TEXT)){
+                forecast = receivedInfo.getStringExtra(Intent.EXTRA_TEXT).toString();}
+            ((TextView) rootView.findViewById(R.id.frag_detail)).setText(forecast);
+
+
             return rootView;
         }
     }

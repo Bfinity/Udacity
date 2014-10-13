@@ -306,7 +306,9 @@ public class ForecastFragment extends Fragment {
         protected void onPostExecute(String[] strings) {
             super.onPostExecute(strings);
             realForecastData = new ArrayList<String>(Arrays.asList(strings));
+            mForecastAdapter.clear();
             for(int i = 0; i < realForecastData.size(); i++) {
+
                 mForecastAdapter.add(realForecastData.get(i));
             }
 

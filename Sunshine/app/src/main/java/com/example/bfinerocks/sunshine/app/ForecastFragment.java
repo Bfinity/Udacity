@@ -5,6 +5,7 @@ package com.example.bfinerocks.sunshine.app;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
+import android.preference.PreferenceManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,20 +59,22 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onStart()
+    {
+        super.onStart();
+        updateWeather();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_my, container, false);
 
-        List<String> fakeForecast;
-        fakeForecast = new ArrayList<String>();
-        fakeForecast.add("Today - Sunny - 88/63");
-        fakeForecast.add("Tomorrow - Rainy - 75/66");
-        fakeForecast.add("Monday - Cloudy - 67/60");
-        fakeForecast.add("Tuesday - Chance of Meatballs - 80/70");
-        fakeForecast.add("Wednesday - Chilly - 50/45");
-        fakeForecast.add("Thursday - Hungry - 80/78");
+        List<String> myForecast;
+        myForecast = new ArrayList<String>();
+
         mForecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
-                R.id.list_item_forecast_textview, fakeForecast);
+                R.id.list_item_forecast_textview, myForecast);
 
         final ListView forecastListView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         forecastListView.setAdapter(mForecastAdapter);
@@ -103,23 +106,36 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+
+/*            Intent settingsActivity = new Intent(getActivity(), SettingsActivity.class);
+            startActivity(settingsActivity);*/
             return true;
         }
         if(id == R.id.action_refresh)
         {
-            new FetchWeatherTask().execute("48228");
+            updateWeather();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateWeather()
+    {
+        SharedPreferences mDefaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = mDefaultSharedPreferences.getString("location", "Detroit");
+/*        String units = mDefaultSharedPreferences.getString("units", "metric");*/
+        new FetchWeatherTask().execute(location);
     }
 
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]>
     {
+
         private final String LOG_TAG  = FetchWeatherTask.class.getSimpleName();
         @Override
         protected String[] doInBackground(String... string) {

@@ -1,0 +1,18 @@
+<resources>
+        <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+    <string name="Location_Title">Location</string>
+    <string name="location_key" translatable="false">location</string>
+    <string name="pref_location_default" translatable="false">Detroit</string>
+
+    <string name="temp_title">Temperature Units</string>
+    <string name="imperial">Imperial</string>
+    <string name="metric">Metric</string>
+    <string name="pref_units_key">units</string>
+
+
+</resources>

@@ -1,5 +1,6 @@
 package com.example.bfinerocks.sunshine.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -36,6 +37,8 @@ public class MyActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            Intent settingsActivity = new Intent(MyActivity.this, SettingsActivity.class);
+            startActivity(settingsActivity);
             return true;
         }
         return super.onOptionsItemSelected(item);

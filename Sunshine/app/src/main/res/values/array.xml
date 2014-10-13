@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_units_values">
+        <item>"Imperial"</item>
+        <item>"Metric"</item>
+    </array>
+    <array name="pref_units_options">
+        <item>"Imperial"</item>
+        <item>"Metric"</item>
+    </array>
+
+
+
+</resources>

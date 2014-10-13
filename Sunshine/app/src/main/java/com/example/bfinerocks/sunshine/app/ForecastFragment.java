@@ -128,8 +128,8 @@ public class ForecastFragment extends Fragment {
     {
         SharedPreferences mDefaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String location = mDefaultSharedPreferences.getString("location", "Detroit");
-/*        String units = mDefaultSharedPreferences.getString("units", "metric");*/
-        new FetchWeatherTask().execute(location);
+        String units = mDefaultSharedPreferences.getString("units", "metric");
+        new FetchWeatherTask().execute(location, units);
     }
 
 
@@ -165,7 +165,7 @@ public class ForecastFragment extends Fragment {
                 Uri aBuilder = Uri.parse(URL_BASE).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, string[0])
                         .appendQueryParameter(QUERY_MODE, mode)
-                        .appendQueryParameter(QUERY_UNITS, units)
+                        .appendQueryParameter(QUERY_UNITS, string[1])
                         .appendQueryParameter(QUERY_COUNT, Integer.toString(numOfDays))
                         .build();
 

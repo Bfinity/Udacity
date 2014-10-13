@@ -8,6 +8,12 @@
         android:showAsAction="never">
 
         </item>
+    <item
+       android:id="@+id/action_viewmap"
+       android:title="@string/view_map"
+       android:showAsAction="never">
+
+       </item>
 
 
 </menu>

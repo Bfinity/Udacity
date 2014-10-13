@@ -9,5 +9,6 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="dummy_text">Something</string>
     <string name="dummy_temp">98</string>
+    <string name="view_map">View Location On Map</string>
 
 </resources>

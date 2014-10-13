@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.preference.PreferenceManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +44,9 @@ import java.util.List;
  */
 public class ForecastFragment extends Fragment {
     private static final String LOG_TAG = "JSon";
-
+    SharedPreferences mDefaultSharedPreferences;
+    private String location;
+    private String units;
 
     ArrayAdapter<String> mForecastAdapter;
     List<String> realForecastData;
@@ -121,15 +124,32 @@ public class ForecastFragment extends Fragment {
         {
             updateWeather();
         }
+        if(id == R.id.action_viewmap)
+        {
+            viewLocationOnMap();
+        }
         return super.onOptionsItemSelected(item);
     }
 
     public void updateWeather()
     {
-        SharedPreferences mDefaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String location = mDefaultSharedPreferences.getString("location", "Detroit");
-        String units = mDefaultSharedPreferences.getString("units", "metric");
+        mDefaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        location = mDefaultSharedPreferences.getString("location", "Detroit");
+        units = mDefaultSharedPreferences.getString("units", "metric");
         new FetchWeatherTask().execute(location, units);
+    }
+
+    public void viewLocationOnMap()
+    {;
+        Uri.Builder uriBuilt = new Uri.Builder();
+        uriBuilt.scheme("https").authority("www.google.com").appendPath("maps")
+                .appendPath("place").appendPath(location);
+        Intent seeLocation = new Intent(Intent.ACTION_VIEW);
+        seeLocation.setData(uriBuilt.build());
+        if(seeLocation.resolveActivity(getActivity().getPackageManager()) != null)
+        {
+            startActivity(seeLocation);
+        }
     }
 
 

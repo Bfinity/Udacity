@@ -3,19 +3,21 @@ package com.example.bfinerocks.sunshine.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ShareActionProvider;
+
 import android.widget.TextView;
 
 
 public class DetailActivity extends ActionBarActivity {
-    private ShareActionProvider mShareActionProvider;
-    public static String forecast;
+
     String weatherToDisplay;
 
     @Override
@@ -36,10 +38,6 @@ public class DetailActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.detail, menu);
 
-        MenuItem shareItem = menu.findItem(R.id.share_selection);
-        mShareActionProvider = (ShareActionProvider)shareItem.getActionProvider();
-        setShareIntent();
-
         return true;
     }
 
@@ -59,25 +57,18 @@ public class DetailActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setShareIntent()
-    {
-        if(mShareActionProvider != null){
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        String weatherShare = forecast + "#SunshineApp";
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, weatherShare);
-        mShareActionProvider.setShareIntent(shareIntent);}
 
-    }
 
     /**
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
-
+        private String forecast;
+        private static final String FORECAST_HASHTAG = "#SunshineApp";
         private ShareActionProvider mShareActionProvider;
 
         public PlaceholderFragment() {
+            setHasOptionsMenu(true);
         }
 
         @Override
@@ -86,14 +77,33 @@ public class DetailActivity extends ActionBarActivity {
             Intent receivedInfo = getActivity().getIntent();
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
             if(receivedInfo != null && receivedInfo.hasExtra(Intent.EXTRA_TEXT)){
-                DetailActivity.forecast = receivedInfo.getStringExtra(Intent.EXTRA_TEXT).toString();}
+                forecast = receivedInfo.getStringExtra(Intent.EXTRA_TEXT).toString();}
             ((TextView) rootView.findViewById(R.id.frag_detail)).setText(forecast);
 
 
             return rootView;
         }
 
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            inflater.inflate(R.menu.detail, menu);
 
+            MenuItem shareItem = menu.findItem(R.id.share_selection);
+            mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+            setShareIntent();
+
+        }
+
+        public Intent setShareIntent()
+        {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                String weatherShare = forecast + "#SunshineApp";
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, weatherShare);
+                mShareActionProvider.setShareIntent(shareIntent);
+            return shareIntent;
+        }
 
 
 

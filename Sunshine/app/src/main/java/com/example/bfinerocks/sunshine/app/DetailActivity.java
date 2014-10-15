@@ -88,7 +88,7 @@ public class DetailActivity extends ActionBarActivity {
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
             // Inflate the menu; this adds items to the action bar if it is present.
-            inflater.inflate(R.menu.detail, menu);
+            inflater.inflate(R.menu.detailfragment, menu);
 
             MenuItem shareItem = menu.findItem(R.id.share_selection);
             mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
@@ -106,7 +106,7 @@ public class DetailActivity extends ActionBarActivity {
         public Intent setShare()
         {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                String weatherShare = forecast + "#SunshineApp";
+                String weatherShare = forecast + FORECAST_HASHTAG;
                 shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, weatherShare);

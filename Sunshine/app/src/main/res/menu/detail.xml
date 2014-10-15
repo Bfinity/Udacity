@@ -7,8 +7,4 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
-    <item android:id="@+id/share_selection"
-          android:title="@string/share"
-          android:showAsAction="always"
-          android:actionProviderClass="android.widget.ShareActionProvider"/>
 </menu>

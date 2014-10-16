@@ -6,6 +6,8 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.example.bfinerocks.sunshine.app.data.WeatherContract.WeatherEntry;
+
 /**
  * Created by BFineRocks on 10/15/14.
  */
@@ -56,7 +58,17 @@ public class WeatherProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        return null;
+        final int match = uriMatcher.match(uri);
+        switch (match){
+            case WEATHER_WITH_LOCATION_AND_DATE:
+                return WeatherContract.WeatherEntry.CONTENT_TYPE_ITEM;
+            case WEATHER_WITH_LOCATION:
+                return WeatherEntry.CONTENT_TYPE;
+            case WEATHER:
+                return WeatherEntry.CONTENT_TYPE;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
     }
 
     @Override

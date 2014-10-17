@@ -168,4 +168,24 @@ public class TestProvider extends ApplicationTest {
         dbHelper.close();
 
     }
+
+    public void testGetType(){
+        String type = mContext.getContentResolver().getType(WeatherEntry.CONTENT_URI);
+        assertEquals(WeatherEntry.CONTENT_TYPE, type);
+
+        String testLocation = "94074";
+        type = mContext.getContentResolver().getType(WeatherEntry.buildWeatherLocation(testLocation));
+        assertEquals(WeatherEntry.CONTENT_TYPE, type);
+
+        String testDate = "20140612";
+        type = mContext.getContentResolver().getType(
+                WeatherEntry.buildWeatherLocationWithDate(testLocation, testDate));
+        assertEquals(WeatherEntry.CONTENT_TYPE_ITEM, type);
+
+        type = mContext.getContentResolver().getType(LocationEntry.CONTENT_URI);
+        assertEquals(LocationEntry.CONTENT_TYPE, type);
+
+        type = mContext.getContentResolver().getType(LocationEntry.buildLocationUri(1L));
+        assertEquals(LocationEntry.CONTENT_ITEM_TYPE, type);
+    }
 }

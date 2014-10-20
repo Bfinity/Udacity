@@ -27,10 +27,12 @@ public class WeatherProvider extends ContentProvider {
 
     //content://com.example.bfinerocks.sunshine.app/location/[location_id]
     private static final int LOCATION_ID = 301;
-    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    private static final UriMatcher uriMatcher = buildUriMatcher();
     private WeatherDbHelper mOpenHelper;
 
     private static UriMatcher buildUriMatcher(){
+
+        final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
 
     final String authority = WeatherContract.CONTENT_AUTHORITY;
